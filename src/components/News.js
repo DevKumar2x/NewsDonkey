@@ -1,32 +1,270 @@
-import { Component } from 'react'
+import { Component, useState } from 'react'
 import NewsItem from './NewsItem'
 
 export class News extends Component {
+
+  articles = [
+    {
+      "source": {
+        "id": null,
+        "name": "CNBC"
+      },
+      "author": "Sean Conlon, Tanaya Macheel",
+      "title": "S&P 500 falls alongside tech as oil continues march higher: Live updates - CNBC",
+      "description": "The Dow Jones Industrial Average sank into correction territory on Friday, joining the Nasdaq, which entered a correction the day before.",
+      "url": "https://www.cnbc.com/2026/03/29/stock-market-today-live-updates.html",
+      "urlToImage": "https://image.cnbcfm.com/api/v1/image/108284858-1774888484050-gettyimages-2268562258-US_STOCKS.jpeg?v=1774888512&w=1920&h=1080",
+      "publishedAt": "2026-03-30T18:43:00Z",
+      "content": "The S&amp;P 500 traded lower on Monday as traders failed to sustain a rally following comments by Federal Reserve Chair Jerome Powell that assuaged concerns about a possible interest rate hike.\r\nThe … [+2829 chars]"
+    },
+    {
+      "source": {
+        "id": "cbs-news",
+        "name": "CBS News"
+      },
+      "author": "Tucker  Reals, Lucia I Suarez Sang",
+      "title": "Live Updates: Trump renews threat to Iran's power plants as war sends oil prices soaring again - CBS News",
+      "description": "Energy markets remain volatile as Trump threatens Iran with an invasion to seize its oil while also suggesting a deal could soon end the war.",
+      "url": "https://www.cbsnews.com/live-updates/iran-war-us-trump-uncertainty-oil-prices-strait-of-hormuz-houthis-red-sea/",
+      "urlToImage": "https://assets2.cbsnewsstatic.com/hub/i/r/2026/03/30/7aa8f975-b4f8-46d9-be2e-c2f35eef759a/thumbnail/1200x630/0ee232220ecf313bc6b10cfb3aef069d/israel-haifa-oil-refinery-iran-strike.jpg",
+      "publishedAt": "2026-03-30T16:40:00Z",
+      "content": "At least two Chinese cargo ships that were blocked by Iran last week as they tried to transit the Strait of Hormuz managed to traverse the key waterway on Monday, according to tracking data from the … [+2564 chars]"
+    },
+    {
+      "source": {
+        "id": "bloomberg",
+        "name": "Bloomberg"
+      },
+      "author": "Mathieu Dion",
+      "title": "Air Canada CEO Quits After Furor Over Crash Condolence Video - Bloomberg.com",
+      "description": "Air Canada Chief Executive Officer Michael Rousseau is stepping down after he caused a public-relations disaster with a video about the deadly runway collision at LaGuardia Airport in New York.",
+      "url": "https://www.bloomberg.com/news/articles/2026-03-30/air-canada-ceo-to-quit-after-furor-about-plane-crash-video",
+      "urlToImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ioI5ltvch1Hk/v1/1200x867.jpg",
+      "publishedAt": "2026-03-30T16:26:01Z",
+      "content": "Air Canada Chief Executive Officer Michael Rousseau is stepping down after he caused a public-relations disaster with a video about the deadly runway collision at LaGuardia Airport in New York.\r\nRous… [+119 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "PEOPLE"
+      },
+      "author": "https://www.facebook.com/peoplemag",
+      "title": "Joseph Duggar's Whereabouts Unknown as Officials Decline to Comment 3 Days After His Release From Arkansas Jail - Yahoo",
+      "description": "Joseph Duggar is no longer in the custody of officials in Arkansas as of March 27, but 3 days latter officials in Floirida will still not confirm if he has been extradited.",
+      "url": "https://people.com/joseph-duggar-released-from-arkansas-jail-11937076",
+      "urlToImage": "https://people.com/thmb/HCHBbFRh5fm1m1MMJtMzLo7vUN0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(499x0:501x2)/Joseph-Duggar-mugshot-031826-9566df9dce63463086e311816b99aac1.jpg",
+      "publishedAt": "2026-03-30T16:04:50Z",
+      "content": "Joseph Duggar was released from custody in Arkansas on Friday, March 27, the Washington County Sheriff's Office tells PEOPLE He waived his right to extradition one week prior on March… [+3717 chars]"
+    },
+    {
+      "source": {
+        "id": "politico",
+        "name": "Politico"
+      },
+      "author": "Finya Swai",
+      "title": "US reopens embassy in Venezuela - Politico",
+      "description": "The embassy’s reopening in Caracas was part of the Trump administration’s plan to mend diplomatic ties with Venezuela.",
+      "url": "https://www.politico.com/news/2026/03/30/us-reopens-embassy-venezuela-00850217",
+      "urlToImage": "https://www.politico.com/dims4/default/resize/1200/quality/90/format/jpg?url=https%3A%2F%2Fstatic.politico.com%2F04%2F9c%2Fe0bde73a4e3489cafe9cb0bcf281%2Fus-venezuela-51179.jpg",
+      "publishedAt": "2026-03-30T16:01:04Z",
+      "content": "The U.S. Embassy stands in Caracas, Venezuela, on Jan. 8, 2026. | Matias Delacroix/AP \n The United States is resuming operations at its embassy in Caracas after a seven-year hiatus, citing a new chapt… [+717 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "CBS Sports"
+      },
+      "author": "Ryan Wilson",
+      "title": "2026 NFL three-round mock draft: Steelers target high-upside WR, then trade back into Round 1 for QB - CBS Sports",
+      "description": "Team needs have become much clearer after pro days",
+      "url": "https://www.cbssports.com/nfl/draft/news/nfl-three-round-mock-draft-2026-steelers-ty-simpson/",
+      "urlToImage": "https://sportshub.cbsistatic.com/i/r/2026/03/07/854edd10-51cd-42a7-b61e-0d9bb1b2b5db/thumbnail/1200x675/8168caf563d3fa76f14d4a55fe4ab9f6/ty-simpson.jpg",
+      "publishedAt": "2026-03-30T15:58:00Z",
+      "content": "We're less than a month from the 2026 NFL Draft, and college all-star games, the NFL Scouting Combine and most pro days are behind us. All that's left are the remaining 30 visits and personal workout… [+15183 chars]"
+    },
+    {
+      "source": {
+        "id": "nbc-news",
+        "name": "NBC News"
+      },
+      "author": "Rebecca Cohen",
+      "title": "Actor and comedian Alex Duong dies at 42 - NBC News",
+      "description": "Alex Duong, an actor and comedian known for his work on \"Blue Bloods,\" died Saturday, according to an update on a GoFundMe page started last year to support him and his family during his cancer treatment.",
+      "url": "https://www.nbcnews.com/pop-culture/celebrity/actor-comedian-alex-duong-dies-42-cancer-battle-rcna265773",
+      "urlToImage": "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/rockcms/2026-03/260330-alex-duong-rs-e96f8f.jpg",
+      "publishedAt": "2026-03-30T15:54:18Z",
+      "content": "Alex Duong, an actor and comedian known for his work on \"Blue Bloods,\" died Saturday, according to an update on a GoFundMe page started last year to support him and his family during his cancer treat… [+1600 chars]"
+    },
+    {
+      "source": {
+        "id": "the-verge",
+        "name": "The Verge"
+      },
+      "author": "Emma Roth",
+      "title": "The latest Pixel 11 leak shows slimmer bezels and an all-black camera bar - theverge.com",
+      "description": "Leaked renders shared by Android Headlines appear to show the Google Pixel 11 with slimmer bezels and an all-black rear camera bar.",
+      "url": "https://www.theverge.com/tech/903381/google-pixel-11-leak-bezels-camera-bar",
+      "urlToImage": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/03/pixel-11-leak.webp?quality=90&strip=all&crop=0,3.4523511806323,100,93.095297638735",
+      "publishedAt": "2026-03-30T15:52:41Z",
+      "content": "The Pixel 11 might swap its predecessors two-tone camera bar for a solid color.The Pixel 11 might swap its predecessors two-tone camera bar for a solid color."
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "NPR"
+      },
+      "author": "",
+      "title": "NASA is just days away from historic Artemis II moon launch - NPR",
+      "description": "On Wednesday, the crew of NASA's Artemis II could blast off on a mission around the moon and back. No astronaut has ventured out to the moon since the 1970s.",
+      "url": "https://www.npr.org/2026/03/30/nx-s1-5698159/nasa-artemis-ii-astronauts-moon-return-this-week",
+      "urlToImage": "https://npr.brightspotcdn.com/dims3/default/strip/false/crop/6000x3375+0+254/resize/1400/quality/85/format/jpeg/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Fbf%2Fee%2F8ae1b3e7489582668691d86477b1%2Fgettyimages-2268671875.jpg",
+      "publishedAt": "2026-03-30T15:30:27Z",
+      "content": "NASA astronauts could be just days away from blasting off towards the moon for the first time since 1972, when Apollo astronaut Eugene Cernan took his last steps in the gray lunar dust.As soon as W… [+5962 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "GSMArena.com"
+      },
+      "author": "Peter",
+      "title": "Ayaneo discontinues Snapdragon 8 Elite based Pocket FIT console due to rising costs - GSMArena.com news - GSMArena.com",
+      "description": "The Pocket FIT 8Elite was delayed for a few months and it finally started shipping - but this will likely be the last production batch due to high memory costs.",
+      "url": "https://www.gsmarena.com/ayaneo_discontinues_snapdragon_8_elite_based_pocket_fit_console_due_to_rising_costs-news-72163.php",
+      "urlToImage": "https://fdn.gsmarena.com/imgroot/news/26/03/ayaneo-discontinues-some-consoles/-952x498w6/gsmarena_000.jpg",
+      "publishedAt": "2026-03-30T15:29:02Z",
+      "content": "Things arent getting better they are getting worse. The current semiconductor shortages are affecting RAM, SSD and CPU prices and companies are pulling the emergency brake.\r\nAyaneo just announced tha… [+2484 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "MarketWatch"
+      },
+      "author": "Greg Robb",
+      "title": "Fed chief Powell says risks to economy suggest rates could go lower or higher - marketwatch.com",
+      "description": "Wall Street grows more worried about growth impact from higher gas prices",
+      "url": "https://www.marketwatch.com/story/powell-says-risks-to-economy-suggest-rates-could-go-lower-or-higher-b0a4134f",
+      "urlToImage": "https://images.mktw.net/im-62547017/social",
+      "publishedAt": "2026-03-30T14:56:00Z",
+      "content": "Federal Reserve Chair Jerome Powell kept his options open about how the central bank would react to the economic effects of the Iran war, saying interest rates may need to be lower or higher, given t… [+239 chars]"
+    },
+    {
+      "source": {
+        "id": "google-news",
+        "name": "Google News"
+      },
+      "author": "Business Insider",
+      "title": "A Walmart-related recession indicator that's preceded the last 4 economic downturns is flashing red - Business Insider",
+      "description": null,
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPWDR5NF9iYThiRWF4OVQ0ZGUxT0VEMHBMQzZYUkZFZzR2S2dVbzZrNkZ1WGdJeFdndy1FOGxpSVJyejhsM0VhU0lSYWFma2M4N210ck5fZTEyVzlJenlYa0dRd2tTSEdtbjd6c1AxR21SeXUyNTlESC1hV0NXRDJzOGRTaEFZbklGTVJ5M1g2MGVRY3dPWEpqUmlWRTlaR1NneFVBb3JPRFY?oc=5",
+      "urlToImage": null,
+      "publishedAt": "2026-03-30T14:08:00Z",
+      "content": null
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "MMA Fighting"
+      },
+      "author": "Jed Meshew",
+      "title": "Joe Pyfer explains post-fight admission that he nearly ‘took my own life’ before UFC Seattle - MMA Fighting",
+      "description": "Joe Pyfer admitted after his win at UFC Seattle that he almost harmed himself before getting help.",
+      "url": "https://www.mmafighting.com/latest-news/479472/joe-pyfer-explains-post-fight-admission-that-he-nearly-took-my-own-life-before-ufc-seattle",
+      "urlToImage": "https://platform.mmafighting.com/wp-content/uploads/sites/109/2026/03/gettyimages-2268855177.jpg?quality=90&strip=all&crop=0%2C10.732984293194%2C100%2C78.534031413613&w=1200",
+      "publishedAt": "2026-03-30T14:00:00Z",
+      "content": "Joe Pyfer is in a much better place than he was just a few weeks ago.On Saturday, Pyfer scored the biggest win of his career, finishing former two-time middleweight champion Israel Adesanya in the … [+2423 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "247Sports"
+      },
+      "author": "Kyle Tucker",
+      "title": "Mom couldn't watch, dad knew it was good: The night UConn's Braylon Mullins became a March Madness legend - 247Sports",
+      "description": "Braylon Mullins miraculous lastsecond shot lifted UConn past Duke and into the Final Four",
+      "url": "https://247sports.com/article/uconn-braylon-mullins-march-madness-279635965/",
+      "urlToImage": "https://s3media.247sports.com/Uploads/Assets/655/683/13683655.jpg?width=1200&height=628&crop=1.91:1&fit=cover",
+      "publishedAt": "2026-03-30T13:55:07Z",
+      "content": "WASHINGTON, D.C. — What does it sound like when your son becomes an instant NCAA Tournament legend? Katie Mullins can tell you, because her head was buried in her hands when it happened to her boy, B… [+3403 chars]"
+    },
+    {
+      "source": {
+        "id": "cnn",
+        "name": "CNN"
+      },
+      "author": "Jacqueline Howard",
+      "title": "After a heart attack, beta-blockers are often a lifelong medicine. Maybe they shouldn’t be - cnn.com",
+      "description": "For decades, surviving a heart attack has come with a lifelong prescription: Stay on medications called beta-blockers to help protect your heart. But doctors are taking a closer look at whether long-term beta-blocker use is really necessary, especially beyond…",
+      "url": "https://www.cnn.com/2026/03/30/health/heart-attack-beta-blockers-new-study-wellness",
+      "urlToImage": "https://media.cnn.com/api/v1/images/stellar/prod/gettyimages-1007713790.jpg?c=16x9&q=w_800,c_fill",
+      "publishedAt": "2026-03-30T13:30:54Z",
+      "content": "For decades, surviving a heart attack has come with a lifelong prescription: Stay on medicationscalled beta-blockersto help protect your heart. But doctors are taking a closer look at whether long-te… [+8175 chars]"
+    },
+    {
+      "source": {
+        "id": null,
+        "name": "PEOPLE"
+      },
+      "author": "Latoya Gayle",
+      "title": "3 Men Charged as Police Find Nearly $100M Worth of Cocaine Hidden in Bananas - Yahoo",
+      "description": "The drugs were seized at Southampton Docks in England after being sailed from Nicaragua via Panama",
+      "url": "https://people.com/3-men-charged-police-find-nearly-100-million-dollars-worth-cocaine-hidden-bananas-11936940",
+      "urlToImage": "https://s.yimg.com/ny/api/res/1.2/4vKICSpPIMbeGsE.8hYj5g--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD04MDA7Y2Y9d2VicA--/https://media.zenfs.com/en/people_218/24db62380861d0342dbda181ff384866",
+      "publishedAt": "2026-03-30T13:02:23Z",
+      "content": "NEED TO KNOW Authorities seized 943kg of cocaine from a shipment container at Southampton Docks in England According to the U.K.'s National Crime Agency, the drugs had been smuggle… [+2223 chars]"
+    },
+    {
+      "source": {
+        "id": "the-washington-post",
+        "name": "The Washington Post"
+      },
+      "author": "Justin Jouvenal",
+      "title": "Trump officials cite white supremacists in bid to end birthright citizenship - The Washington Post",
+      "description": "An argument heading to the Supreme Court is built in part on a post-Civil War campaign that scholars say was steeped in anti-Black and anti-Chinese racism.",
+      "url": "https://www.washingtonpost.com/politics/2026/03/30/trump-birthright-citizenship-supreme-court-case/",
+      "urlToImage": "https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/4EPHLAWRU4GBNB5ATAUV753PVI_size-normalized.jpg&w=1440",
+      "publishedAt": "2026-03-30T12:02:07Z",
+      "content": "Alexander Porter Morse, a Confederate officer during the Civil War and a Louisiana attorney, argued for legalized segregation inthe landmark 1896 Supreme Court case that established the separate but … [+43 chars]"
+    },
+    {
+      "source": {
+        "id": "associated-press",
+        "name": "Associated Press"
+      },
+      "author": null,
+      "title": "Trump says he has no problem with a Russian tanker bringing oil to Cuba despite US blockade - AP News",
+      "description": null,
+      "url": "https://apnews.com/article/cuba-trump-russia-oil-shipment-b6845987728e28d5d762992840ca6b69",
+      "urlToImage": null,
+      "publishedAt": "2026-03-30T10:28:00Z",
+      "content": null
+    }
+  ]
+
+  constructor(){
+    super();
+    this.State = {
+      articles : this.articles
+    }
+  }
+
   render() {
     return (
       <div className="container">
+
+        <h2>News-Donkey - Top Headlines</h2>
+
         <div className="row">
-          <div className="col-md-3">
+          <div className="col-md-4">
+            <NewsItem title="myTitle" description="myDesc" imageUrl="https://www.politico.com/dims4/default/resize/1200/quality/90/format/jpg?url=https%3A%2F%2Fstatic.politico.com%2F04%2F9c%2Fe0bde73a4e3489cafe9cb0bcf281%2Fus-venezuela-51179.jpg"/>
+          </div>
+          <div className="col-md-4">
             <NewsItem title="mytitle" description="mydesc"/>
           </div>
-          <div className="col-md-3">
-            <NewsItem title="mytitle" description="mydesc"/>
-          </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <NewsItem title="mytitle" description="mydesc"/>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-3">
-            <NewsItem title="mytitle" description="mydesc"/>
-          </div>
-          <div className="col-md-3">
-            <NewsItem title="mytitle" description="mydesc"/>
-          </div>
-          <div className="col-md-3">
-            <NewsItem title="mytitle" description="mydesc"/>
-          </div>
-        </div>
+
       </div>
     )
   }
