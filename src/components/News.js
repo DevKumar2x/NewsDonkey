@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import NewsItem from './NewsItem'
+import Spinner from './Spinner';
 
 export class News extends Component {
   
@@ -14,42 +15,48 @@ export class News extends Component {
 
   async componentDidMount(){
       // API call to fetch news articles
-      let url = 'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=eee52a7a28e4497b96509996b48fcd7a&page=1&pageSize=13';
+      let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=eee52a7a28e4497b96509996b48fcd7a&page=1&pageSize=${this.props.pageSize}`;
+      this.setState({loading : true});
       let data = await fetch(url);
       let parsedData = await data.json()
-      this.setState({articles: parsedData.articles});
+      this.setState({articles: parsedData.articles , loading : false});
   }
 
   handleNextClick = async() => {
 
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=eee52a7a28e4497b96509996b48fcd7a&page=${this.state.page + 1}&pageSize=13`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=eee52a7a28e4497b96509996b48fcd7a&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+    this.setState({loading : true});
     let data = await fetch(url);
     let parsedData = await data.json()
-
+    
     this.setState({
       page : this.state.page + 1,
-      articles: parsedData.articles
+      articles: parsedData.articles,
+      loading : false
     })
   }
 
   handlePrevClick = async() => {
 
-    let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=eee52a7a28e4497b96509996b48fcd7a&page=${this.state.page - 1}&pageSize=13`;
+    let url = `https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=eee52a7a28e4497b96509996b48fcd7a&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
+    this.setState({loading : true});
     let data = await fetch(url);
     let parsedData = await data.json()
-
+    
     this.setState({
       page : this.state.page - 1,
-      articles: parsedData.articles
+      articles: parsedData.articles,
+      loading : false
     })
   }
 
   render() {
     return (
       <div className="container">
-        <h1>News-Donkey - Top Headlines</h1>
+        <h1 className='text-center'>News-Donkey - Top Headlines</h1>
+        {this.state.loading && <Spinner/>}
         <div className="row">
-          {this.state.articles.map((element) => {
+          {!this.state.loading && this.state.articles.map((element) => {
             return (
               <div className="col-md-4" key={element.url}>
                 <NewsItem
