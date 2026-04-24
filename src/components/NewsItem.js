@@ -9,7 +9,7 @@ export class NewsItem extends Component {
     return (
       <div className='my-2'>
         <div className="card" style={{ width: "18rem" }}>
-          <img src={imgSrc} className="card-img-top" alt={title || 'news'} />
+          <img src={imgSrc} className="card-img-top" alt={title || 'news'} onError={(e)=>{e.target.onerror=null; e.target.src=fallbackImage}} />
           <div className="card-body">
             <h5 className="card-title">{title}...</h5>
             <p className="card-text">{description}...</p>
