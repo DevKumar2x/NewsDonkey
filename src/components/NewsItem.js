@@ -7,8 +7,8 @@ export class NewsItem extends Component {
     const imgSrc = (imageUrl && imageUrl !== 'null') ? imageUrl : fallbackImage;
 
     return (
-      <div className='my-2'>
-        <div className="card" style={{ width: "18rem" }}>
+      <div className='my-2 news-item'>
+        <div className="card news-card">
           <img src={imgSrc} className="card-img-top" alt={title || 'news'} onError={(e)=>{e.target.onerror=null; e.target.src=fallbackImage}} />
           <div className="card-body">
             <h5 className="card-title">{title}...</h5>

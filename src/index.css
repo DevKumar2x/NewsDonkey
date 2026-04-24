@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Slab:wght@400;700&display=swap');
+
+:root{
+  --bg: #f5f7fb;
+  --card-bg: #ffffff;
+  --primary: #0d6efd;
+  --accent: #0b5ed7;
+  --muted: #6c757d;
+}
+
+html, body, #root { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+  color: #222;
+  margin: 0;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+a { text-decoration: none; }
+
+.container { max-width: 1140px; }
+
+/* utility spacing */
+.mt-2 { margin-top: .5rem; }
+.my-2 { margin-top: .75rem; margin-bottom: .75rem; }
+
